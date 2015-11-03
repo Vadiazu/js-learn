@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="common.css"/>
+</head>
+<body class="task9">
+    <div class="desc">
+        Create gallery (without animation effects), which will autorotate through slides every 0.5 sec after button PLAY is clicked. Text inside button must change between PLAY and STOP according to autorotation state.
+    </div>
+    <ul id="gallery">
+        <li><img src="http://lorempixel.com/83/60/sports/1" alt="image" width="83" height="60"/></li>
+        <li><img src="http://lorempixel.com/83/60/sports/2" alt="image" width="83" height="60"/></li>
+        <li><img src="http://lorempixel.com/83/60/sports/3" alt="image" width="83" height="60"/></li>
+        <li><img src="http://lorempixel.com/83/60/sports/4" alt="image" width="83" height="60"/></li>
+        <li><img src="http://lorempixel.com/83/60/sports/5" alt="image" width="83" height="60"/></li>
+    </ul>
+    <div class="nav">
+        <a id="btn">PLAY</a>
+    </div>
+    <script>
+        function initPage() {
+            var startBtn = document.getElementById('btn'),
+                slider = document.getElementById('gallery'),
+                galleryControl;
+            startBtn.addEventListener('click', galleryInit);
+
+            function galleryInit(){
+                var textStop = 'STOP',
+                    textPlay = 'PLAY',
+                    curText = startBtn.text;
+                if(curText === textPlay){
+                    startBtn.text = textStop;
+                    galleryControl = setInterval(startPlay, 1000);
+                } else {
+                    startBtn.text = textPlay;
+                    clearInterval(galleryControl);
+                }
+            }
+
+            function startPlay(){
+                var galleryElem = slider.children,
+                    galleryElemLength = galleryElem.length,
+                    curIndex, i;
+
+                for(i=0;i<galleryElemLength;i++){
+                    var curElem = galleryElem[i];
+                    if(curElem.classList.contains('active') && i != (galleryElemLength - 1) && i != 0){
+                        curElem.classList.remove('active');
+                        curIndex = i + 1;
+                        break
+                    }
+                    if (i == 0 && curElem.classList.contains('active')){
+                        curElem.classList.remove('active');
+                        curIndex = 1;
+                        break
+                    }
+                    if (i == galleryElemLength - 1){
+                        curElem.classList.remove('active');
+                        curIndex = 0;
+                        break
+                    }
+                }
+                galleryElem[curIndex].classList.add('active');
+            }
+
+        }
+        if(window.addEventListener) { // code for W3C compatible browsers (IE9+)
+            window.addEventListener('load', initPage, false);
+        } else if(window.attachEvent) { // code for IE6-8
+            // old IE also requires prefix 'on' before event name:
+            window.attachEvent('onload', initPage);
+        }
+    </script>
+</body>
+</html>
