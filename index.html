@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<style>
+		body{
+			padding: 0;
+			margin: 0;
+		}
+		table{
+			border: 1px solid green;
+			border-collapse: collapse;
+			width: 100%;
+		}
+		td{
+			padding: 15px;
+			border: 1px solid green;
+		}
+	</style>
+</head>
+<body>
+	<script>
+		(function (){
+			//создаем необходимые переменные
+			var rowCount = 20,
+				cellCount = 20,
+				alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'],
+				//создание таблицы
+				body = document.getElementsByTagName('body')[0],//находим общий контейнер то бишь боди
+				tbl = document.createElement('table'),//создаем сам тег таблицы
+				tbdy = document.createElement('tbody');//для семантики создадим тело таблицы
+
+			//теперь создадим внутряк таблицы
+			for (var i = 0; i < rowCount; i++) {//перебираем ряды
+				var tr = document.createElement('tr');//создаем новый ряд на каждом шаге
+				for (var j = 0; j < cellCount; j++) {//этот цикл используем для набития каждого отдельного ряда
+
+					var td = document.createElement('td'),//создаем ячейку
+					//создаем рандомную букву
+						max = alphabet.length,//стандартная функция длины массива, юзаем для ограничения рандома
+						arrIndex;//переменная в которую рандомный индекс
+
+					//теперь добудем рандомное число
+					function getRandomInt(max) {
+						arrIndex = Math.floor(Math.random() * max);//в математике я не силен, но это то что нам нужно))
+					}
+					getRandomInt(max);//вызов функции возвращающей индекс массива
+
+					td.appendChild(document.createTextNode(alphabet[arrIndex]));//вставляем букву в ячейку
+
+					//рандомный цвет
+					var letters = '0123456789ABCDEF'.split(''),//создаем массив с элементами формирующими хексовый код цвета, более короткий вариант создания массива чем для алфавита
+						color = '#';//переменная для цвета, уже содержит начальный хэш
+
+					function getRandomColor() {
+						for (var i = 0; i < 6; i++ ) {//переберем 6 элементов(в хексе 6 символов)
+							color += letters[Math.floor(Math.random() * letters.length)];//получаем рандом перебирая элементы массива, каждый шаг заносит в переменную колор символ из массива летерс
+						}
+					} getRandomColor();
+
+					td.style.backgroundColor = color;//вешаем цвет инлайновым стилем(бе бе бе)
+					tr.appendChild(td);//засовываем ячейку в ряд
+				}
+				tbdy.appendChild(tr);//засовываем ряд в тело таблицы
+			}
+			tbl.appendChild(tbdy);//засовываем тело в таблицу
+			body.appendChild(tbl);//засовываем таблицы в боди
+		})();
+	</script>
+</body>
+</html>
