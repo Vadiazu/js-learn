@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="common_jq.css"/>
+    <script src="jquery-2.1.1.js"></script>
+</head>
+<body class="task5">
+<div>
+    Set tank (@div class="box"@) position to the middle of @div class="box-holder"@ on page load
+    Using keyboard arrows tank must move inside .box-holder
+    Using keyboard arrows tank must change its direction according to pressed arrow (by changing backgroun image).
+    When mouse clicks .box-holder move tank there without any animation.
+    You can handle mouse and keyboard events like following:
+</div>
+    <div class="holder">
+        <div class="box-holder">
+            <div class="box">Tank</div>
+        </div>
+    </div>
+<a title="info text">bla bla</a>
+    <script>
+        $(function(){
+            var tank = $('.box'),
+                field = $('.box-holder'),
+                tankHeight = tank.height(),
+                tankWidth = tank.width(),
+                fieldHeight = field.height(),
+                fieldWidth = field.width(),
+                maxRight = fieldWidth - tankWidth,
+                maxDown = fieldHeight - tankHeight;
+
+            centerTank(tank, tankHeight, tankWidth, fieldHeight, fieldWidth);
+
+            $(document).keydown(function(e){
+                if(e.keyCode == 37){
+                    moveLeft(tank);
+                }
+                if(e.keyCode == 38){
+                    moveTop(tank);
+                }
+                if(e.keyCode == 39){
+                    moveRight(tank, maxRight);
+                }
+                if(e.keyCode == 40){
+                    moveDown(tank, maxDown);
+                }
+            });
+
+            $('div.box-holder').mousedown(function(e){
+                jumpTank(e, tank, field);
+            });
+
+        });
+
+        function centerTank(tank, tankHeight, tankWidth, fieldHeight, fieldWidth){
+            tank.css({
+                left: fieldWidth/2 - tankWidth/2,
+                top: fieldHeight/2 - tankHeight/2
+            });
+        }
+
+        function moveLeft(tank){
+            var current = parseInt(tank.css('left')) - 1;
+            if(current >= 0){
+                tank.css({
+                    background: 'url(tank-left.gif)',
+                    left: current + 'px'
+                });
+            } else {
+                alert('limit is reached');
+            }
+        }
+
+        function moveTop(tank){
+            var current = parseInt(tank.css('top')) - 1;
+            if(current >= 0){
+                tank.css({
+                    background: 'url(tank-up.gif)',
+                    top: current + 'px'
+                });
+            } else {
+                alert('limit is reached');
+            }
+        }
+
+        function moveRight(tank, maxRight){
+            var current = parseInt(tank.css('left')) + 1;
+            if(current <= maxRight){
+                tank.css({
+                    background: 'url(tank-right.gif)',
+                    left: current + 'px'
+                });
+            } else {
+                alert('limit is reached');
+            }
+        }
+
+        function moveDown(tank, maxDown){
+            var current = parseInt(tank.css('top')) + 1;
+            if(current <= maxDown){
+                tank.css({
+                    background: 'url(tank-down.gif)',
+                    top: current + 'px'
+                });
+            } else {
+                alert('limit is reached');
+            }
+        }
+
+        function jumpTank(e, tank, field){
+            var elemTop = e.pageY - field.offset().top,
+                elemLeft = e.pageX - field.offset().left,
+                maxTop = field.height() - tank.height(),
+                maxRight = field.width() - tank.width();
+            if(elemTop > maxTop){
+                elemTop = maxTop;
+            }
+            if(elemLeft > maxRight){
+                elemLeft = maxRight;
+            }
+            tank.css({
+                top: elemTop + 'px',
+                left: elemLeft + 'px'
+            });
+        }
+    </script>
+</body>
+</html>
