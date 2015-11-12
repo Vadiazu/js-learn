@@ -6,140 +6,53 @@
     <link rel="stylesheet" href="common_jq.css"/>
     <script src="jquery-2.1.1.js"></script>
 </head>
-<body class="task6">
+<body class="task7">
 <div>
-    - Create OpenClose, using .slideUp() and .slideDown() methods, dont forget to toggle active class on parent node.<br>
-    - Create multilevel accordion based on OpenClose code
+    Create custom checkbox. Iterate through all checkboxes and create @span class="checkbox-area"@ near each checkbox using method insertBefore. Created element must match checkbox value (when checkbox is checked class checkbox-area-checked will be added, otherwise this class will be removed). Also when clicking on fake checkbox the real one must toggle its checked state.
 </div>
-<div class="holder">
-    <h2>OpenClose:</h2>
-    <div class="open-close">
-        <a class="opener">Heading 1</a>
-        <div class="slide">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fermentum, odio ut mattis lacinia, erat purus laoreet justo, nec tempus justo lorem rhoncus dui. Aliquam ut rhoncus mauris. Morbi faucibus semper lacus sollicitudin sagittis. Vivamus ullamcorper ullamcorper volutpat. Duis erat sapien, ultrices non commodo at, lobortis et mi. Nullam mattis elit et tortor aliquet eu porta purus elementum. Curabitur elit risus, faucibus vitae mattis a, tristique ac magna. Maecenas sit amet mi ante, non feugiat metus. Donec a velit enim. Maecenas quis leo vitae dui venenatis placerat ut id felis. Duis rutrum viverra elementum. In non est purus. Pellentesque posuere orci dolor. Quisque dapibus rutrum ligula quis pretium. Aliquam erat volutpat. Etiam nec neque et nunc lobortis luctus. Nullam dolor lacus, imperdiet ac viverra vel, pellentesque non metus. Mauris eget euismod velit. Cras varius urna a felis eleifend fermentum.</p>
-        </div>
-    </div>
-    <div class="open-close active">
-        <a class="opener">Heading 2</a>
-        <div class="slide">
-            <p>Sed sit amet quam sit amet ligula gravida condimentum. Vestibulum sapien dolor, sollicitudin a egestas sit amet, pharetra et nisl. Sed ornare, elit a consequat sodales, lorem arcu scelerisque tortor, quis condimentum leo orci nec neque. Etiam sed dolor eget nunc aliquam mattis a quis ante. Morbi sed massa vitae ipsum ullamcorper placerat. In hac habitasse platea dictumst. Nam ullamcorper turpis a lectus pellentesque id tincidunt lectus lacinia. Aliquam nibh augue, eleifend sit amet cursus vitae, laoreet nec nulla. Sed tincidunt, purus ut vulputate dignissim, quam mauris blandit mi, ac imperdiet erat ante at lacus. Donec consequat lacinia nulla, quis aliquet augue tristique et. Vestibulum ornare facilisis elit ac molestie.</p>
-        </div>
-    </div>
-</div>
-<div class="holder">
-    <h2>Accordion:</h2>
-    <ul class="accordion">
-        <li>
-            <a>Item1</a>
-            <ul>
-                <li>
-                    <a>1. SubItem1</a>
-                    <ul>
-                        <li><a>1. DeepLevel 1</a></li>
-                        <li><a>1. DeepLevel 2</a></li>
-                        <li><a>1. DeepLevel 3</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a>1. SubItem2</a>
-                    <ul>
-                        <li><a>1. DeepLevel 1</a></li>
-                        <li><a>1. DeepLevel 2</a></li>
-                        <li><a>1. DeepLevel 3</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a>1. SubItem3</a>
-                    <ul>
-                        <li><a>1. DeepLevel 1</a></li>
-                        <li><a>1. DeepLevel 2</a></li>
-                        <li><a>1. DeepLevel 3</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <a>Item2</a>
-            <ul>
-                <li>
-                    <a>2. SubItem1</a>
-                    <ul>
-                        <li><a>2. DeepLevel 1</a></li>
-                        <li><a>2. DeepLevel 2</a></li>
-                        <li><a>2. DeepLevel 3</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a>2. SubItem2</a>
-                    <ul>
-                        <li><a>2. DeepLevel 1</a></li>
-                        <li><a>2. DeepLevel 2</a></li>
-                        <li><a>2. DeepLevel 3</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a>2. SubItem3</a>
-                    <ul>
-                        <li><a>2. DeepLevel 1</a></li>
-                        <li><a>2. DeepLevel 2</a></li>
-                        <li><a>2. DeepLevel 3</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <a>Item3</a>
-            <ul>
-                <li><a>3. SubItem1</a></li>
-                <li><a>3. SubItem2</a></li>
-                <li><a>3. SubItem3</a></li>
-            </ul>
-        </li>
-    </ul>
+<div class="form-holder">
+    <form action="" method="post">
+        <fieldset>
+            <div class="row">
+                <input type="checkbox" id="chk1" />
+                <label for="chk1">Checkbox1</label>
+            </div>
+            <div class="row">
+                <input type="checkbox" id="chk2" checked />
+                <label for="chk2">Checkbox2</label>
+            </div>
+        </fieldset>
+    </form>
 </div>
     <script>
         $(function(){
-            openClose();
-            accordion();
+            checkboxInit();
         });
-        function openClose(){
-            $('.open-close').each(function(){
-                if(!$(this).hasClass('active')){
-                    $(this).find('.slide').hide();
+        function checkboxInit(){
+            $('input[type="checkbox"]').each(function(){
+                $('<span class="checkbox-area"></span>').insertBefore($(this));
+                if($(this).is(':checked')){
+                    $(this).prev().addClass('checkbox-area-checked');
+                }
+                $(this).on('click', function(){
+                    if($(this).prop('checked')){
+                        $(this).prev().addClass('checkbox-area-checked');
+                    } else{
+                        $(this).prev().removeClass('checkbox-area-checked');
+                    };
+                });
+            });
+            $('.checkbox-area').on('click', function(){
+                var $this = $(this);
+                if($this.hasClass('checkbox-area-checked')){
+                    $this.removeClass('checkbox-area-checked');
+                    $this.next().prop('checked', false);
+                } else{
+                    $this.addClass('checkbox-area-checked');
+                    $this.next().prop('checked', true);
                 }
             });
-            $('.open-close .opener').on('click', function(){
-                var parent = $(this).parent();
-                if(!parent.hasClass('active')){
-                    parent.addClass('active');
-                    parent.find('.slide').slideDown();
-                } else {
-                    parent.removeClass('active');
-                    parent.find('.slide').slideUp();
-                }
-            });
-        };
-        function accordion(){
-            $('.accordion a').each(function(){
-                if(!$(this).parent().hasClass('active')){
-                    $(this).next().hide();
-                }
-            });
-            $('.accordion a').on('click', function(){
-                var parent = $(this).closest('ul');
-                if($(this).next().length){
-                    if(!$(this).parent().hasClass('active')){
-                        parent.find('ul').slideUp();
-                        parent.find('li').removeClass('active');
-                        $(this).parent().addClass('active');
-                        $(this).next().slideDown();
-                    } else {
-                        $(this).parent().removeClass('active');
-                        $(this).next().slideUp();
-                    }
-                }
-            });
-        };
+        }
     </script>
 </body>
 </html>

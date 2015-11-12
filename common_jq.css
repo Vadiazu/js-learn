@@ -123,7 +123,7 @@ form,fieldset {
 	left:0;
 	text-indent:-6666px;
 	overflow:hidden;
-	background: url(task05/images/tank-up.gif);
+	background: url(tank-up.gif);
 }
 
 /* task 6 styles */
@@ -144,12 +144,12 @@ form,fieldset {
 	padding: 5px;
 	display: block;
 }
-.task6 .open-close .slide { 
+.task6 .open-close .slide {
 	position: relative;
 	overflow: hidden;
 	width: 100%; /* set width in px to avoid jumping! */
 }
-.task6 .open-close .slide p { 
+.task6 .open-close .slide p {
 	margin: 0;
 }
 .task6 .accordion,

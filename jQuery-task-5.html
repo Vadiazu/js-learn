@@ -6,50 +6,124 @@
     <link rel="stylesheet" href="common_jq.css"/>
     <script src="jquery-2.1.1.js"></script>
 </head>
-<body class="task4">
+<body class="task5">
 <div>
-    Create tooltips which follows mouse cursor while it moves over element.<br>
-    Tooltips must work for all @a@ which has attribute title<br>
-    You can use the following algorithm:<br>
-    Create @div id="tooltip"@ - its very easy with jQuery: var tooltip = $('@div id="tooltip"@');<br>
-        Append created "div" inside "body" - for this you can use: tooltip.appendTo('body');<br>
-        Iterate through links which has title. Save title value in local variable and remove attribute title from the link (doing this we will prevent showing of native tooltip).<br>
-        Add event handlers:<br>
-        On mouseenter - inside tooltip append text from variable which contains link title. Display tooltip<br>
-        On mousemove - reposition tooltip. You can get mouse coords relative to @body@ from event object properties pageX and pageY: btn.mousemove(function(e){ console.log(e.pageX, e.pageY) })<br>
-        On mouseleave - hide tooltip<br>
-        #tooltip with text can be moved by setting additional margin'a (using jQuery method .css you can slightly move it from the mouse pointer to avoid blinking)
+    Set tank (@div class="box"@) position to the middle of @div class="box-holder"@ on page load
+    Using keyboard arrows tank must move inside .box-holder
+    Using keyboard arrows tank must change its direction according to pressed arrow (by changing backgroun image).
+    When mouse clicks .box-holder move tank there without any animation.
+    You can handle mouse and keyboard events like following:
 </div>
-<div class="box">
-    <p>Quisque aliquet, erat ut <a title="First item text">placerat sodales</a>, ligula nibh adipiscing dolor, in tincidunt lacus dui at tellus. Morbi a nibh massa. Fusce pulvinar ipsum in erat ornare tincidunt.</p>
-    <p>Fusce iaculis sagittis feugiat. Sed elementum volutpat justo, in vulputate leo <a >pellentesque (no title)</a> et. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean blandit porta neque sit amet porttitor. Maecenas viverra pulvinar augue, in malesuada urna facilisis sed. Proin eu dolor lacus, ac facilisis dolor. Donec pulvinar consectetur interdum. Duis at urna volutpat dui consectetur euismod vitae eget enim. Fusce sem felis, hendrerit id volutpat in, rutrum vitae felis. Donec hendrerit erat a purus rhoncus adipiscing. In hac habitasse platea dictumst. Suspendisse potenti. Donec lacinia, metus sed interdum sagittis, odio nunc pellentesque velit, id rhoncus nisi dolor ac metus. Curabitur facilisis accumsan libero eget feugiat. Suspendisse potenti. Suspendisse commodo pellentesque volutpat. Cras ut arcu tincidunt massa blandit lobortis. <a title="viverra mauris">Maecenas</a> viverra mauris vitae urna placerat vehicula. Phasellus id ultrices est.</p>
-</div>
-<a title="info text">bla bla</a>
+    <div class="holder">
+        <div class="box-holder">
+            <div class="box">Tank</div>
+        </div>
+    </div>
     <script>
         $(function(){
-            var tooltip =$('<div id="tooltip">');
-            tooltip.appendTo('body');
-            $('a[title]').each(function(){
-                var tipText = $(this).attr('title');
-                $(this).removeAttr('title');
-                $(this).on({
-                    mouseenter: function(){
-                        tooltip.append(tipText);
-                        tooltip.show();
-                    },
-                    mousemove: function(e){
-                        tooltip.css({
-                            top: e.pageY + 10,
-                            left: e.pageX +10
-                        });
-                    },
-                    mouseleave: function(){
-                        tooltip.empty();
-                        tooltip.hide();
-                    }
-                });
+            var tank = $('.box'),
+                field = $('.box-holder'),
+                tankHeight = tank.height(),
+                tankWidth = tank.width(),
+                fieldHeight = field.height(),
+                fieldWidth = field.width(),
+                maxRight = fieldWidth - tankWidth,
+                maxDown = fieldHeight - tankHeight;
+
+            centerTank(tank, tankHeight, tankWidth, fieldHeight, fieldWidth);
+
+            $(document).keydown(function(e){
+                if(e.keyCode == 37){
+                    moveLeft(tank);
+                }
+                if(e.keyCode == 38){
+                    moveTop(tank);
+                }
+                if(e.keyCode == 39){
+                    moveRight(tank, maxRight);
+                }
+                if(e.keyCode == 40){
+                    moveDown(tank, maxDown);
+                }
             });
+
+            $('div.box-holder').mousedown(function(e){
+                jumpTank(e, tank, field);
+            });
+
         });
+
+        function centerTank(tank, tankHeight, tankWidth, fieldHeight, fieldWidth){
+            tank.css({
+                left: fieldWidth/2 - tankWidth/2,
+                top: fieldHeight/2 - tankHeight/2
+            });
+        }
+
+        function moveLeft(tank){
+            var current = parseInt(tank.css('left')) - 1;
+            if(current >= 0){
+                tank.css({
+                    background: 'url(tank-left.gif)',
+                    left: current + 'px'
+                });
+            } else {
+                alert('limit is reached');
+            }
+        }
+
+        function moveTop(tank){
+            var current = parseInt(tank.css('top')) - 1;
+            if(current >= 0){
+                tank.css({
+                    background: 'url(tank-up.gif)',
+                    top: current + 'px'
+                });
+            } else {
+                alert('limit is reached');
+            }
+        }
+
+        function moveRight(tank, maxRight){
+            var current = parseInt(tank.css('left')) + 1;
+            if(current <= maxRight){
+                tank.css({
+                    background: 'url(tank-right.gif)',
+                    left: current + 'px'
+                });
+            } else {
+                alert('limit is reached');
+            }
+        }
+
+        function moveDown(tank, maxDown){
+            var current = parseInt(tank.css('top')) + 1;
+            if(current <= maxDown){
+                tank.css({
+                    background: 'url(tank-down.gif)',
+                    top: current + 'px'
+                });
+            } else {
+                alert('limit is reached');
+            }
+        }
+
+        function jumpTank(e, tank, field){
+            var elemTop = e.pageY - field.offset().top,
+                elemLeft = e.pageX - field.offset().left,
+                maxTop = field.height() - tank.height(),
+                maxRight = field.width() - tank.width();
+            if(elemTop > maxTop){
+                elemTop = maxTop;
+            }
+            if(elemLeft > maxRight){
+                elemLeft = maxRight;
+            }
+            tank.css({
+                top: elemTop + 'px',
+                left: elemLeft + 'px'
+            });
+        }
     </script>
 </body>
 </html>
