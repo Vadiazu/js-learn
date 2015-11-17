@@ -32,13 +32,25 @@
         <p>Aliquam est purus, ullamcorper vel fermentum ac, adipiscing eu nisi. Vivamus tempus eros sit amet quam elementum sit amet porttitor nulla pretium. Donec ut nunc leo, vitae euismod magna. Pellentesque tincidunt laoreet lacus. Nulla ut purus non nibh ornare fermentum. In hac habitasse platea dictumst. In dictum, enim sed mollis cursus, neque diam consequat sapien, sed consectetur sem risus at lacus. Morbi a facilisis tellus. Praesent vitae enim tortor. Donec ultricies blandit ante, sit amet malesuada nibh tincidunt in. Nulla sed dolor metus. Praesent diam leo, fringilla lobortis faucibus in, egestas cursus lectus. Nam vitae sapien magna, a sagittis mauris. Duis faucibus blandit purus eget congue. Praesent nisl neque, hendrerit vel dapibus sed, rutrum sit amet elit. Curabitur fringilla auctor sagittis. Mauris sed mi laoreet eros tincidunt euismod. Sed sagittis diam ac ipsum congue cursus.</p>
         <p>Fusce hendrerit, eros sed semper tempor, dui velit cursus diam, dignissim laoreet massa urna at quam. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec non ligula non lacus ultricies tempor. Aenean eu enim sit amet purus egestas vulputate eget eget elit. Suspendisse quis pretium dui. Fusce vel neque risus. Etiam molestie dolor sed nibh facilisis consectetur porta est suscipit. Sed egestas tincidunt dolor, sed tincidunt augue luctus in. Suspendisse facilisis leo at leo tristique vitae fermentum urna semper. Fusce eget est mauris. Integer eleifend iaculis imperdiet. Cras molestie suscipit libero in congue. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum aliquam eleifend ante, quis pretium justo dignissim in. Donec vestibulum cursus velit. Aenean id orci felis, eget feugiat elit. Curabitur sed nisl quis nibh sagittis tempus ut nec lectus. Aliquam in eros mollis arcu accumsan tempus at ut eros. Vestibulum id lorem et nulla vulputate scelerisque.</p>
     </div>
-    [26.10.2015 16:59:01] Klyzhka Anton: anton.klyzhka@psd2html.com
-    anton.klyzhka@psd2html.com
-    [26.10.2015 16:59:12] Klyzhka Anton: https://s3.amazonaws.com/scrstorage/v37t103b22651025.jpg
     <div id="footer">Footer</div>
     <script>
         function initPage() {
+            document.addEventListener('scroll', stickyInit);
 
+            function stickyInit(){
+                var slider = document.getElementById('slider'),
+                    topOffset = document.getElementById('ad'),
+                    bottomOffset = document.getElementById('footer'),
+                    topOffsetValue = window.pageYOffset + slider.offsetHeight,
+                    bottomOffsetValue = document.body.clientHeight - bottomOffset.offsetHeight;
+                if(window.pageYOffset > topOffset.offsetHeight + 20 && !(topOffsetValue >= bottomOffsetValue)){
+                  slider.style.position = "fixed";
+                  slider.style.top = "0";
+                  slider.style.left = "10px";
+                } else {
+                    slider.style.cssText = " ";
+                }
+            }
         }
         if(window.addEventListener) { // code for W3C compatible browsers (IE9+)
             window.addEventListener('load', initPage, false);

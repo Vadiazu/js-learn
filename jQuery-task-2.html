@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="common_jq.css"/>
+    <script src="jquery-2.1.1.js"></script>
+</head>
+<body class="task2">
+    <div>
+        Clear default text in inputs when focused. Clear default text when event focus occured and do not restore it if user entered something. Restore default text when blur event occured if nothing was entered.<br/>
+        Algorithm you can use:<br/>
+        Find all input type="text" and <br/>
+        Iterate through them using each and save default text to variable<br/>
+        Add focus and blur event handlers which will clear and restore text inside input when needed<br/>
+    </div>
+    <div class="hold">
+        <input type="text" value="some text" />
+        <input type="text" value="other text" />
+        <textarea cols="30" rows="8">Quisque aliquet, erat ut placerat sodales</textarea>
+    </div>
+    <script>
+        $(function(){
+            var inputs = $('input[type="text"], textarea');
+            inputs.each(function(){
+                var defaultTxt = $(this).val();
+                $(this).focus(function(){
+                    if($(this).val() == defaultTxt){
+                        $(this).val('');
+                    }
+                });
+                $(this).blur(function(){
+                    if(!$(this).val()){
+                        $(this).val(defaultTxt);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

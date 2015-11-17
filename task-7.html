@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Example</title>
+	<link rel="stylesheet" href="common.css"/>
+</head>
+<body class="task7">
+<div class="holder">
+	<a class="button">button</a>
+	<div class="box">
+		<p>some text text text some text some text text text some text some text</p>
+	</div>
+</div>
+<div class="holder">
+	<a class="button">button</a>
+	<div class="box">
+		<p>some text text text some text some text text text some text some text</p>
+		<p>some text text text some text some text text text some text some text</p>
+	</div>
+</div>
+<div class="holder">
+	<a class="button">button</a>
+	<div class="box">
+		<p>some text text text some text some text text text some text some text</p>
+	</div>
+</div>
+<script>
+	function initPage() {
+		var elem = document.getElementsByClassName('button');
+		for(var i=0; i<elem.length; i++){
+			elem[i].addEventListener('click', clickLi);
+		}
+	}
+	function clickLi(e){
+		e.stopPropagation();
+		var cur = e.target,
+			parent = cur.parentNode,
+			box = parent.getElementsByClassName('box');
+		if(parent.classList.contains('active')){
+			parent.classList.remove('active');
+			box[0].style.display = 'none';
+		} else {
+			parent.classList.add('active');
+			box[0].style.display = 'block';
+		}
+	}
+	window.addEventListener('load', initPage, false);
+</script>
+</body>
+</html>

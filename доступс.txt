@@ -1,0 +1,48 @@
+ссш
+*** SSH ***
+host: gitlab.w3project.org
+port: 2222
+username: viktor.prystupa
+password: 7gPR7w89wJDB
+
+
+*** GITLAB ***
+https://gitlab.w3project.org:8443/
+username/email: viktor.prystupa / viktor.prystupa@w3.ua
+password: 7gPR7w89wJDB
+
+
+*** Atachments ***
+gitlab.w3project.org.pub - SSH public key
+gitlab.w3project.org.key - SSH private key
+viktor.prystupa@gitlab.w3project.org.ppk - SSH private key to use with Putty/WinSCP
+
+проекты тут - /data/vhosts
+команда - sudo /vhosts/update.sh
+
+/********************/
+swell bitbucket
+MarinaSmagina
+w3paSSw3paSS
+
+/********************/
+PSD2html mail
+email: viktor.prystupa@psd2html.com
+password: r48S3u8d8sTK
+
+Incoming server
+address: mail.psd2html.com
+protocol: IMAP
+port: 993
+Connection security: SSL/TLS
+
+Outgoing server
+address: mail.psd2html.com
+port: 587
+Connection security: STARTTLS
+
+Webmail
+https://webmail.psd2html.com/
+
+///**illustrator**////
+dw6.ts.w3.ua:3390
