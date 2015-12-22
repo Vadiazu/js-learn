@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="common_jq.css"/>
+    <script src="jquery-2.1.1.js"></script>
+</head>
+<body class="task10">
+    <div>
+        - Create three galleries: simple gallery, cycle gallery and slideshow, using .animate();<br/>
+        - Prev/Next/Pagination functionality must work in all galleries. Optionally add autorotation
+    </div>
+    <div class="gallery-holder carousel">
+        <h2>Карусель (slide-эффект):</h2>
+        <div class="gallery">
+            <div class="gholder">
+                <a class="btn-prev">&lt;</a>
+                <div class="gmask">
+                    <ul>
+                        <li class="c1 active">1</li>
+                        <li class="c2">2</li>
+                        <li class="c3">3</li>
+                        <li class="c4">4</li>
+                        <li class="c5">5</li>
+                    </ul>
+                </div>
+                <a class="btn-next">&gt;</a>
+            </div>
+            <div class="pagination">
+                <ul>
+                    <li class="active"><a>1</a></li>
+                    <li><a>2</a></li>
+                    <li><a>3</a></li>
+                    <li><a>4</a></li>
+                    <li><a>5</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="gallery-holder slideshow">
+        <h2>Слайдшоу (fade-эффект):</h2>
+        <div class="gallery">
+            <div class="gholder">
+                <a class="btn-prev">&lt;</a>
+                <div class="gmask">
+                    <ul>
+                        <li class="c1 active">1</li>
+                        <li class="c2">2</li>
+                        <li class="c3">3</li>
+                        <li class="c4">4</li>
+                        <li class="c5">5</li>
+                    </ul>
+                </div>
+                <a class="btn-next">&gt;</a>
+            </div>
+            <div class="pagination">
+                <ul>
+                    <li class="active"><a>1</a></li>
+                    <li><a>2</a></li>
+                    <li><a>3</a></li>
+                    <li><a>4</a></li>
+                    <li><a>5</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="gallery-holder cycle">
+        <h2>Циклическая карусель (slide-эффект):</h2>
+        <div class="gallery">
+            <div class="gholder">
+                <a class="btn-prev">&lt;</a>
+                <div class="gmask">
+                    <ul>
+                        <li class="c1 active">1</li>
+                        <li class="c2">2</li>
+                        <li class="c3">3</li>
+                        <li class="c4">4</li>
+                        <li class="c5">5</li>
+                    </ul>
+                </div>
+                <a class="btn-next">&gt;</a>
+            </div>
+            <div class="pagination">
+                <ul>
+                    <li class="active"><a>1</a></li>
+                    <li><a>2</a></li>
+                    <li><a>3</a></li>
+                    <li><a>4</a></li>
+                    <li><a>5</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script>
+        jQuery(function(){
+            initCarousel();
+        });
+        function initCarousel(){
+            jQuery('.carousel .gallery').ScrollGallery({
+                auto: true
+            });
+        }
+    </script>
+</body>
+</html>
