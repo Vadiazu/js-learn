@@ -99,10 +99,113 @@
             initCarousel();
         });
         function initCarousel(){
-            jQuery('.carousel .gallery').ScrollGallery({
-                auto: true
+            jQuery('.carousel .gallery').scrollGallery({
+                autoRotation: true
             });
         }
+        ;(function($){
+            function ScrollGallery(options) {
+                this.options = $.extend({
+                    activeClass:'active',
+                    disabledClass:'disabled',
+                    btnPrev: 'a.btn-prev',
+                    btnNext: 'a.btn-next',
+                    autoRotation: false,
+                    switchTime: 4000,
+                    animSpeed: 600
+                }, options);
+                this.init();
+            }
+            ScrollGallery.prototype = {
+                init: function() {
+                    if(this.options.holder) {
+                        var gallery = $(this.options.holder),
+                            slides = gallery.find('.gmask ul li'),
+                            galleryLength = slides.length,
+                            sliderWidth = slides.outerWidth(),
+                            pager = gallery.find('.pagination ul li'),
+                            btnNext =  gallery.find('.btn-next'),
+                            btnPrev = gallery.find('.btn-prev'),
+                            animSpeed = this.options.animSpeed,
+                            autoRotation = this.options.autoRotation,
+                            switchTime = this.options.switchTime,
+                            rotateInterval;
+                        if(autoRotation){
+                            rotateInterval = setInterval(function(){autoRotate()}, switchTime);
+                        }
+                        pager.on('click', function(){
+                            var $this = $(this),
+                                index = $this.index();
+                            classActive(index);
+                            changeSlide(index);
+                        });
+                        btnNext.on('click', function(){
+                            var activeIndex;
+                            slides.each(function(){
+                                if($(this).hasClass('active')){
+                                    activeIndex = $(this).index() + 1;
+                                }
+                            });
+                            if(activeIndex < galleryLength){
+                                classActive(activeIndex);
+                                changeSlide(activeIndex);
+                            }
+                        });
+                        btnPrev.on('click', function(){
+                            var activeIndex;
+                            slides.each(function(){
+                                if($(this).hasClass('active')){
+                                    activeIndex = $(this).index() - 1;
+                                }
+                            });
+                            if(activeIndex >= 0){
+                                classActive(activeIndex);
+                                changeSlide(activeIndex);
+                            }
+                        });
+                        function classActive(index){
+                            pager.removeClass('active');
+                            slides.removeClass('active');
+                            pager.eq(index).addClass('active');
+                            slides.eq(index).addClass('active');
+                        };
+                        function changeSlide(index){
+                            var animateElement = gallery.find('.gmask ul'),
+                                scrollWidth;
+                            if(index != 0){
+                                scrollWidth = -index * sliderWidth;
+                            } else {
+                                scrollWidth = 0;
+                            }
+                            animateElement.animate({'margin-left': scrollWidth}, animSpeed);
+                            if(autoRotation){
+                                clearInterval(rotateInterval);
+                                rotateInterval = setInterval(function(){autoRotate()}, switchTime);
+                            }
+                        };
+                        function autoRotate(){
+                            var activeIndex;
+                            slides.each(function(){
+                                if($(this).hasClass('active')){
+                                    activeIndex = $(this).index() + 1;
+                                }
+                            });
+                            if(activeIndex == galleryLength){
+                                pager.eq(0).trigger('click');
+                            } else{
+                                btnNext.trigger('click');
+                            }
+                        }
+                    }
+                }
+            };
+            // jquery plugin
+            $.fn.scrollGallery = function(opt){
+                return this.each(function(){
+                    $(this).data('ScrollGallery', new ScrollGallery($.extend(opt,{holder:this})));
+                });
+            };
+        }(jQuery));
     </script>
 </body>
 </html>
